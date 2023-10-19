@@ -1,0 +1,78 @@
+extends base
+
+block content
+  .containers
+    .table-responsive
+      .table-wrapper
+        .table-title
+          .row
+            .col-xs-5
+              h2 User
+                b Management
+        table.table.table-striped.table-hover
+          thead
+            tr
+              th #
+              th Name
+              th email
+              th role
+          tbody
+            each user in users
+              tr
+                td #{ user._id}
+                td #{user.name}
+                td #{user.email}
+                td #{user.role}
+                td
+                  button#edit-tour(data-editTour-id=`${user._id}`, class='settings', title='Settings', data-toggle='tooltip')
+                    i.material-icons &#xE8B8;
+                  button#delete-tour(class='delete', title='Delete', data-toggle='tooltip', data-deleteTour-id=`${user.id}`)
+                    i.material-icons &#xE5C9;
+          
+
+  
+  .modal-overlay-edit.hide
+    .modal-wrapper-edit
+      .close-btn-wrapper-edit
+        button.close-modal-btn-edit
+          | Close
+      h1 Update Tour
+      form.form.form--EditUser
+        .form__group
+          label(for='roleUE') Choose guides
+          select#roleUE(name='role')
+              option(value='admin')= 'admin'
+              option(value='user')= 'user'
+              option(value='lead-guide')= 'lead-guide'
+              option(value='guide')= 'guide'
+        .form__group
+          button#editUser.btn.btn--green(type='submit') Update User
+        
+
+  .modal-overlay-delete.hide
+    .modal-wrapper-delete
+      .close-btn-wrapper-delete
+        button.close-modal-btn-delete
+          | Close
+      h1 Delete User
+      form#deleteUser
+        button#deleteUser.btn.btn--red(type='submit') Delete 
+
+    //-  document.addEventListener("DOMContentLoaded", function () {
+    //-   const addTourButton = document.getElementById("addTour");
+    //-   const modal = document.getElementById("myModal");
+
+    //-   addTourButton.addEventListener("click", function () {
+    //-     modal.style.display = "block";
+    //-   });
+
+    //-   document.querySelector(".close").addEventListener("click", function () {
+    //-     modal.style.display = "none";
+    //-   });
+
+    //-   window.addEventListener("click", function (event) {
+    //-     if (event.target === modal) {
+    //-       modal.style.display = "none";
+    //-     }
+    //-   });
+    //- });

@@ -1,0 +1,56 @@
+extends base
+
+block content
+  .containers
+    .table-responsive
+      .table-wrapper
+        .table-title
+          .row
+            .col-xs-5
+              h2 User
+                b Management
+        table.table.table-striped.table-hover
+          thead
+            tr
+              th #
+              th Name
+              th userId
+              th tour
+          tbody
+            each review in reviews
+              tr
+                td #{ review._id}
+                td #{review.review}
+                td #{review.user._id}
+                td #{review.tour}
+                td
+                  button#delete-tour(class='delete', title='Delete', data-toggle='tooltip', data-deleteTour-id=`${review._id}`)
+                    i.material-icons &#xE5C9;  
+
+  .modal-overlay-delete.hide
+    .modal-wrapper-delete
+      .close-btn-wrapper-delete
+        button.close-modal-btn-delete
+          | Close
+      h1 Delete Review
+      form#deleteReviewForm
+        button#deleteReview.btn.btn--red(type='submit') Delete 
+
+    //-  document.addEventListener("DOMContentLoaded", function () {
+    //-   const addTourButton = document.getElementById("addTour");
+    //-   const modal = document.getElementById("myModal");
+
+    //-   addTourButton.addEventListener("click", function () {
+    //-     modal.style.display = "block";
+    //-   });
+
+    //-   document.querySelector(".close").addEventListener("click", function () {
+    //-     modal.style.display = "none";
+    //-   });
+
+    //-   window.addEventListener("click", function (event) {
+    //-     if (event.target === modal) {
+    //-       modal.style.display = "none";
+    //-     }
+    //-   });
+    //- });

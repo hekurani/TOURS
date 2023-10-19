@@ -1,0 +1,223 @@
+extends base
+
+block content
+  .containers
+    .table-responsive
+      .table-wrapper
+        .table-title
+          .row
+            .col-xs-5
+              h2 Tour
+                b Management
+            .col-xs-7
+              button.btn.btn-primary#addTour
+                i.material-icons &#xE147;
+                span.addTour Add New Tour
+        table.table.table-striped.table-hover
+          thead
+            tr
+              th #
+              th Name
+              th Duration
+              th slug
+              th maxGroupSize
+              th price
+              th difficulty
+              th summary
+              th description
+              th image Cover
+              th images
+              th Start Dates
+              th guides
+              th secretTour 
+              th startLocation
+          tbody
+            each tour in tours
+              tr
+                td #{ tour._id}
+                td #{tour.name}
+                td #{tour.duration}
+                td #{tour.slug}
+                td #{tour.maxGroupSize}
+                td #{tour.price}
+                td #{tour.difficulty}
+                td #{tour.summary}
+                td #{tour.description.substring(0, 30)}
+                td #{tour.imageCover}
+                td #{tour.images}
+                td #{String(tour.startDates).substring(0,15)}
+                td
+                  each guide, index in tour.guides
+                      | #{guide.email}
+                      if index < tour.guides.length - 1
+                        | , 
+                td #{tour.secretTour}
+                td description:#{tour.startLocation.description},coordinates:#{tour.startLocation.coordinates}
+                td
+                  button#edit-tour(data-editTour-id=`${tour.id}`, class='settings', title='Settings', data-toggle='tooltip')
+                    i.material-icons &#xE8B8;
+                  button#delete-tour(class='delete', title='Delete', data-toggle='tooltip', data-deleteTour-id=`${tour.id}`)
+                    i.material-icons &#xE5C9;    
+                            
+  .modal-overlay.hide
+    .modal-wrapper
+      .close-btn-wrapper
+        button.close-modal-btn
+          | Close
+      h1 Add New Tour
+      form#form-create-Tour.form.form--CreateTour(enctype='multipart/form-data')
+        .form__group
+          label.form__label(for='name') Name
+          input#nameT.form__input(type='text', placeholder='Tour Name',  minlength='3')
+        .form__group
+          label.form__label(for='Duration') Duration
+          input#durationT.form__input(type='number', placeholder='5')
+        .form__group
+          label.form__label(for='Slug') Slug
+          input#slugT.form__input(type='text', placeholder='The-Sea-Explorer', 
+           minlength='3')
+        .form__group
+          label.form__label(for='maxGroupSize') maxGroupSize
+          input#maxGroupSizeT.form__input(type='number', placeholder='10', 
+           minlength='3')
+        .form__group
+          label.form__label(for='price') price
+          input#priceT.form__input(type='number'
+          , placeholder='10')
+        .form__group
+          label.form__label(for='difficulty') Difficulty
+          input#difficultyT.form__input(type='text'
+          , placeholder='easy/medium/difficult')
+        .form__group
+          label.form__label(for='Summary') Summary
+          input#summaryT.form__input(type='text', placeholder='This tour has a lot of trips like Rugova and the view is incredible...')
+        .form__group
+          label.form__label(for='Summary') Description
+          input#descriptionT.form__input(type='text', placeholder='This tour has a lot of trips like Rugova and the view is incredible...')
+        .form__group
+          label(for='files') Choose ImageCover
+          input#photoS(type='file', name='files',placeholder='Choose 3 Images')
+        .form__group
+          label.form__label(for='Summary') StartDates
+          input#startDatesT.form__input(type='placeholder', placeholder='2021-06-19,2023-07-19,...')
+        .form__group
+          label.form__label(for='Summary') Secret Tour
+          .form__radio-buttons
+            input#yes.form__input(type='radio', name='tourOption', value='Yes')
+            label.form__label(for='yes') Yes
+            input#no.form__input(type='radio', name='tourOption', value='No',checked)
+            label.form__label(for='no') No
+        .form__group
+          label.form__label(for='Summary') StartLocation description
+          input#startLocationDescT.form__input(type='text', placeholder='Bannf, CANADA')
+        .form__group
+          label.form__label(for='Summary') StartLocation Coordinates
+          input#startLocCoordT.form__input(type='text', placeholder='-122.42,45.42')
+        .form__group  
+          label(for='files') Choose 3 Images
+          input#image(type='file', name='files', multiple,placeholder='Choose 3 Images')
+        .form__group
+          label(for='guides') Choose guides
+          select#guidesT(name='guides', multiple)
+            each guide in guides
+              option(value=guide._id)= guide.email
+           
+        .form__group 
+          button#create-tour.btn.btn--green(type="submit") Create New Tour
+
+
+  
+  .modal-overlay-edit.hide
+    .modal-wrapper-edit
+      .close-btn-wrapper-edit
+        button.close-modal-btn-edit
+          | Close
+      h1 Update Tour
+      form.form.form--EditTour
+        .form__group
+          label.form__label(for='name') Name
+          input#nameTE.form__input(type='text', placeholder='Tour Name',  minlength='3')
+        .form__group
+          label.form__label(for='Duration') Duration
+          input#durationTE.form__input(type='number', placeholder='5')
+        .form__group
+          label.form__label(for='Slug') Slug
+          input#slugTE.form__input(type='text', placeholder='The-Sea-Explorer', 
+           minlength='3')
+        .form__group
+          label.form__label(for='maxGroupSize') maxGroupSize
+          input#maxGroupSizeTE.form__input(type='number', placeholder='10', 
+           minlength='3')
+        .form__group
+          label.form__label(for='price') price
+          input#priceTE.form__input(type='number'
+          , placeholder='10')
+        .form__group
+          label.form__label(for='difficulty') Difficulty
+          input#difficultyTE.form__input(type='text'
+          , placeholder='easy/medium/difficult')
+        .form__group
+          label.form__label(for='Summary') Summary
+          input#summaryTE.form__input(type='text', placeholder='This tour has a lot of trips like Rugova and the view is incredible...')
+        .form__group
+          label.form__label(for='Summary') Description
+          input#descriptionTE.form__input(type='text', placeholder='This tour has a lot of trips like Rugova and the view is incredible...')
+        .form__group
+          label(for='files') Choose ImageCover
+          input#photoSE(type='file', name='files',placeholder='Choose 3 Images')
+        .form__group
+          label.form__label(for='Summary') StartDates
+          input#startDatesTE.form__input(type='placeholder', placeholder='2021-06-19,2023-07-19,...')
+        .form__group
+          label.form__label(for='Summary') Secret Tour
+          .form__radio-buttons
+            input#yesE.form__input(type='radio', name='tourOptione', value='Yes')
+            label.form__label(for='yes') Yes
+            input#noE.form__input(type='radio', name='tourOptionE', value='No',checked)
+            label.form__label(for='no') No
+        .form__group
+          label.form__label(for='Summary') StartLocation description
+          input#startLocationDescTE.form__input(type='text', placeholder='Bannf, CANADA')
+        .form__group
+          label.form__label(for='Summary') StartLocation Coordinates
+          input#startLocCoordTE.form__input(type='text', placeholder='-122.42,45.42')
+        .form__group  
+          label(for='files') Choose 3 Images
+          input#imageE(type='file', name='files', multiple,placeholder='Choose 3 Images')
+        .form__group
+          label(for='guides') Choose guides
+          select#guidesTE(name='guides', multiple)
+            each guide in guides
+              option(value=guide._id)= guide.email
+
+        .form__group
+          button(type="submit")#editTour.editTour.btn.btn--green Update Tour
+        
+
+  .modal-overlay-delete.hide
+    .modal-wrapper-delete
+      .close-btn-wrapper-delete
+        button.close-modal-btn-delete
+          | Close
+      h1 Delete Tour
+      form#deleteTour
+        button#delete-Tour(type="submit").btn.btn--red Delete 
+
+    //-  document.addEventListener("DOMContentLoaded", function () {
+    //-   const addTourButton = document.getElementById("addTour");
+    //-   const modal = document.getElementById("myModal");
+
+    //-   addTourButton.addEventListener("click", function () {
+    //-     modal.style.display = "block";
+    //-   });
+
+    //-   document.querySelector(".close").addEventListener("click", function () {
+    //-     modal.style.display = "none";
+    //-   });
+
+    //-   window.addEventListener("click", function (event) {
+    //-     if (event.target === modal) {
+    //-       modal.style.display = "none";
+    //-     }
+    //-   });
+    //- });
