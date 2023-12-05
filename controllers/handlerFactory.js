@@ -50,30 +50,11 @@ if(req.body.password)next(new AppError('You are not allowed to update password',
 })
 exports.createOne=Model=>catchAsync(async (req,res,next)=>{ 
     req.body.imageCover='default.jpg';
-    console.log("req",req.body);
-    const newdoc = await Model.create(req.body)
-    // console.log(Model==Tour,Model,Tour);
-    if (Model==Tour) {
-        // newdoc.images.forEach((el,i)=>{
-        //             el=el.split('-');
-        //             el[1]=newdoc._id;
-        //             newdoc.images[i]=el.join('-');
-        //         })
-        //         const imageCover=newdoc.imageCover.split('-');
-        //         imageCover[1]=newdoc._id;
-        //         newdoc.imageCover=imageCover.join('-');
+    const newdoc = await Model.create(req.body);
 
-        
-    //  newdoc=await Model.findByIdAndUpdate(newdoc._id,{
-    //     images:newdoc.images,
-    //     imageCover
-    // },{
-    //     new:true,
-    //     runValidators:true
-    // })
+    if (Model==Tour) {     
     req.tourId=newdoc._id;
     return next();
-     
     }
     res.status(201).json({
        status:'Success',

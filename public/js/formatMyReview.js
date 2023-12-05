@@ -30,16 +30,15 @@ export async function editReview(reviewId,review,rating){
               Authorization: 'Bearer ' + getCookie('jwtToken')
             },
           };
-        const res = await axios.patch('http://127.0.0.1:3003/api/v1/reviews/'+reviewId , {
-            review,
-            rating
-          },config);
+          const updatedReview={...(review && {review}),...(rating && {rating})}
+        const res = await axios.patch('http://127.0.0.1:3003/api/v1/reviews/'+reviewId , updatedReview,config);
           if(res.data.status=='success'){
             showAlert("Success","You edited your review");
             window.location.reload();
           }
     }
     catch(err){
+      console.log(err)
         showAlert("error",err.response.data.message);
     }
 }

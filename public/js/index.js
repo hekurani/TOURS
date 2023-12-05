@@ -14,7 +14,6 @@ const deleteReviewForm=document.querySelector('#deleteReviewForm');
 const deleteUserForm=document.querySelector('#deleteUser')
 const deleteTourForm=document.getElementById('deleteTour');
 const userForm=document.querySelector('.form--EditUser');
-const editTourForm=document.querySelector('.form--EditTours');
 const myEditReview=document.getElementById('editYouReview');
 const myDeleteReview=document.getElementById('deleteYourReview');
 const loginForm = document.querySelector('.form--login');
@@ -44,7 +43,7 @@ if(signUpForm){
     form.append('name', document.getElementById('nameS').value)
     form.append('email',document.getElementById('emailS').value)
     form.append('password',document.getElementById('passwordS').value)
-    form.append('passwordConfirm',document.getElementById('passwordS').value)
+    form.append('passwordConfirm',document.getElementById('passwordSC').value)
     form.append('photo',document.getElementById('photoS').files[0])
     signUp(form);
   })
@@ -110,12 +109,11 @@ modal.addEventListener("click", (e) => closeModal(e, true));
 if(closeBtn){
 closeBtn.addEventListener("click", closeModal);
 }
-var tourId=null;
+var id=null;
 if(editbtnModal){
 editbtnModal.forEach(el=>{
   el.addEventListener('click', (e) => {
-    tourId=(el.getAttribute('data-editTour-id'));
-    console.log(tourId);
+    id=(el.getAttribute('data-editTour-id'));
     openEditModal();
   });
 })
@@ -130,7 +128,7 @@ closeEditBtn.addEventListener("click", closeEditModal);
 if(deletebtnModal){
   deletebtnModal.forEach(el=>{
     el.addEventListener('click', (e) => {
-      tourId=el.getAttribute('data-deleteTour-id')
+      id=el.getAttribute('data-deleteTour-id')
       openDeleteModal();
     });
   })
@@ -146,14 +144,12 @@ if(deletebtnModal){
   
   if(deleteMe){
     deleteMe.addEventListener('click',e=>{
-      tourId=document.getElementById('deleteMe').getAttribute('data-me');
-      console.log(tourId);
+      id=document.getElementById('deleteMe').getAttribute('data-me');
       openDeleteModal();
     })
   }
   if(createTourForm){
     createTourForm.addEventListener('submit',e=>{
-      console.log("HEKURAN")
       e.preventDefault();
       const selectedGuides = Array.from(document.getElementById('guidesT').selectedOptions).map(option => option.value);
       const name=document.getElementById('nameT').value;
@@ -223,7 +219,7 @@ var rate=0;
 radioButtons.forEach((radio) => {
     radio.addEventListener('click', function() {
          rate = this.getAttribute('data-rate');
-        console.log(rate); // This will log the value of data-rate attribute when the radio button is clicked
+// This will log the value of data-rate attribute when the radio button is clicked
         // You can perform further operations using the 'rate' value here
     });
 });
@@ -232,9 +228,9 @@ postReviewForm.addEventListener('submit',(event)=>{
   event.preventDefault();
   const button = document.querySelector('button[type="submit"]');
   const review=document.getElementById('review').value;
-  const tourId=button.getAttribute('data-tour');
+  const id=button.getAttribute('data-tour');
   const userId=button.getAttribute('data-user');
-  addReview(review,tourId,userId,rate);
+  addReview(review,id,userId,rate);
 })
 }
 if(forgotPasswordForm){
@@ -247,7 +243,6 @@ forgotPassword(email);
 if(resetPasswordForm){
   resetPasswordForm.addEventListener('submit',event=>{
     event.preventDefault();
-    console.log("CLICK");
     const password=document.getElementById('passwordR').value;
     const passwordConfirm=document.getElementById('passwordNR').value;
    const token=document.getElementById('forgotPassword').getAttribute('data-token');
@@ -259,7 +254,6 @@ if(document.getElementById('editTour')){
   document.getElementById('editTour').addEventListener('click',e=>{
    
     e.preventDefault();
-    console.log("HYRII")
     var selectedGuides=[]
     if(document.getElementById('guidesTE').selectedOptions){ 
     selectedGuides = Array.from(document.getElementById('guidesTE').selectedOptions).map(option => option.value);
@@ -354,14 +348,14 @@ form.append('duration', duration);
     for(var i=0;i<selectedGuides.length;i++){
       form.append('guides['+i+']', selectedGuides[i]);
     }
-    editTour(form,tourId);
-    tourId=null;
+    editTour(form,id);
+    id=null;
   })
 }
 if(deleteTourForm){
   deleteTourForm.addEventListener('submit',event=>{
     event.preventDefault();
-    deleteTour(tourId);
+    deleteTour(id);
   })
 }
 if(userForm){
@@ -369,29 +363,26 @@ if(userForm){
     event.preventDefault();
     const selectElement = document.getElementById('roleUE');
 const selectedRole = selectElement.options[selectElement.selectedIndex].value;
-console.log(selectedRole)
-    editUser(selectedRole,tourId);
-    tourId=null;
+    editUser(selectedRole,id);
+    id=null;
   })
 }
 if(deleteUserForm){
   deleteUserForm.addEventListener('submit',event=>{
     event.preventDefault();
-deleteUser(tourId);
-tourId=null;
+deleteUser(id);
+id=null;
   })
 }
 if(deleteReviewForm){
 deleteReviewForm.addEventListener('submit',event=>{
   event.preventDefault();
-  console.log(tourId);
-  deleteAdminReview(tourId);
+  deleteAdminReview(id);
 })
 }
 if(document.getElementById('deleteAcc')){
 document.getElementById('deleteAcc').addEventListener('click',event=>{
   event.preventDefault();
-console.log("HYRI")
 deleteYourself()
 })
 }
@@ -399,7 +390,6 @@ if(myEditReview){
   myEditReview.addEventListener('click',event=>{
     event.preventDefault();
     const placeholderValue = document.getElementById("myInput").value;
-    console.log("Placeholder Value: ", placeholderValue);
 
     // Get the value of the selected radio button
     let ratingValue;
@@ -410,12 +400,28 @@ if(myEditReview){
             break;
         }
     }
-     editReview(tourId,placeholderValue,ratingValue);
+     editReview(id,placeholderValue,ratingValue);
   })
 }
 if(myDeleteReview){
   myDeleteReview.addEventListener('click',event=>{
     event.preventDefault();
-    deleteReview(tourId);
+    deleteReview(id);
   })
+}
+
+const btn = document.querySelector("button");
+const post = document.querySelector(".post");
+const widget = document.querySelector(".star-widget");
+const editBtn = document.querySelector(".edit");
+if(btn){
+btn.onclick = ()=>{
+  widget.style.display = "none";
+  post.style.display = "block";
+  editBtn.onclick = ()=>{
+    widget.style.display = "block";
+    post.style.display = "none";
+  }
+  return false;
+}
 }

@@ -22,13 +22,10 @@ tourRouter
     .route('/')
     .get(routers.getTours)
     .post(authControler.protect,authControler.restrictTo('admin','lead-guide'),routers.CatchErrorTourPhoto,routers.createtour,routers.resizeTourImages)
-    // .post(routers.checkBody,routers.createtour)
 tourRouter
     .route('/:id')
     .delete(authControler.protect,authControler.restrictTo('admin','lead-guide'),routers.deletetour)
     .patch(authControler.protect,authControler.restrictTo('admin','lead-guide'),routers.CatchErrorTourPhoto,routers.resizeTourImages,routers.updatetour)
     .get(routers.gettour)
-
-    // tourRouter.route('/:tourId/reviews').post(authControler.protect,authControler.restrictTo('user'),reviewController.createReview)
 
     module.exports=tourRouter;

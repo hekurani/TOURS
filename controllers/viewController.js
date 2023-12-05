@@ -64,7 +64,7 @@ exports.forgotPassword=(req,res,next)=>{
 }
 exports.getUSerInfo=catchAsync(async (req,res,next)=>{
     const users=await User.find();
-    console.log(users);
+    
     res.status(200).render('adminUsers',{
         title:'UserAdmin',
         users
@@ -85,18 +85,18 @@ exports.getTour=catchAsync( async (req,res,next)=>{
     if(!tour){
         return next(new AppError('There are no tours with that name',401))
     }
-    console.log("idgff"+req.user)
-    var myReview=null;
+    let myReview=null;
+    let bookedTour=null;
     if(req.user){
     myReview=await Reviews.findOne({user:req.user._id,tour:tour._id})
+ bookedTour=await Booking.findOne({user:req.user._id,tour:tour._id})
     }
-    else{
- myReview=null;
-    }
+ console.log(bookedTour)
     res.status(200).render('tour',{
         title:`${tour.name} Tour`,
         tour,
-        myReview
+        myReview,
+        bookedTour
     })
 })
 exports.getLoginForm=(req,res,next)=>{

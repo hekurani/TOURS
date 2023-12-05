@@ -16,13 +16,12 @@ export async function editUser(role,userId){
           data:updateObj,
           headers
         });
-        console.log(res);
-        // if (res.data.status === 'success') {
-        //   showAlert('success', `Tour edited successfully!`);
-        //   setTimeout(()=>{
-        //     window.location.reload();
-        //   },3000)
-        //}
+        if (res.data.status === 'success') {
+          showAlert('success', `Tour edited successfully!`);
+          setTimeout(()=>{
+            window.location.reload();
+          },3000)
+        }
       } catch (err) {
         showAlert('error', err.response.data.message);
       }

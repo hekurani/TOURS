@@ -6,7 +6,6 @@ export async function resetPassword(password,passwordConfirm,token){
             password,
             passwordConfirm
           });
-          console.log(res);
           if(res.data.status=='success'){
             showAlert("Success","An link to reset your password has been sent in your inbox!");
             window.location.reload();

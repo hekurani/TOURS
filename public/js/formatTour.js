@@ -21,13 +21,14 @@ export async function addTour(data){
           },3000)
         }
       } catch (err) {
-        showAlert('error', err.response.data.message);
+        console.log(err);
+        showAlert('error', err.response.data.message.message);
       }
 }
 export async function editTour(data,tourId){
     try {
         const url =`http://127.0.0.1:3003/api/v1/tour/`+tourId ;
-           console.log("HYTI",data)
+          
             const headers = {
               Authorization: 'Bearer ' + getCookie('jwtToken')
             };
@@ -44,7 +45,8 @@ export async function editTour(data,tourId){
           },3000)
         }
       } catch (err) {
-        showAlert('error', err.response.data.message);
+        console.log(err);
+        showAlert('error', err.response.data.message.message);
       }
 }
 export async function deleteTour(tourId){
