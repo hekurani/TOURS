@@ -24,43 +24,7 @@ window.setTimeout(()=>{
         showAlert("error",err.response.data.message);
     }
 }
-// const configAxios=axios.create({
-// 	withCredentials: true,
-// 	baseURL: 'http://127.0.0.1:3003',
-// 	headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'},
-// 	credentials: 'include',
-// })
-// const sendHttpRequest = (method, url, data) => {
-//     return fetch(url, {
-//       method: method,
-//       body: JSON.stringify(data),
-//       headers: data ? { 'Content-Type': 'application/json' } : {}
-//     }).then(response => {
-//       if (response.status >= 400) {
-//         // !response.ok
-//         return response.json().then(errResData => {
-//           const error = new Error('Something went wrong!');
-//           error.data = errResData;
-//           throw error;
-//         });
-//       }
-//       return response.json();
-//     });
-//   };
 
-  
-//    const sendData = () => {
-//     sendHttpRequest('POST', 'http://127.0.0.1:3003/api/v1/user/login', {
-//       email: 'eve.holt@reqres.in'
-//       // password: 'pistol'
-//     })
-//       .then(responseData => {
-//         console.log(responseData);
-//       })
-//       .catch(err => {
-//         console.log(err, err.data);
-//       });
-//   };
 export  const logOut =async()=>{
   try {
     const headers={
@@ -89,7 +53,6 @@ const res = await axios.post('http://127.0.0.1:3003/api/v1/user/signUp', data, {
     withCredentials: true
      // Make sure you set this for cookie handling
   });
-  console.log(res);
 if(res.data.status=='success'){
   setCookie("jwtToken",res.data.token,10);
   setCookie('refreshjwt',res.data.resetToken);  

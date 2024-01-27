@@ -7,11 +7,10 @@ this.to=user.email;
   this.firstName=String(user.name).split(' ')[0]
 
 this.url=url;
-this.from='Hekuran Kokolli <hello@jonas.io'  
+this.from='Hekuran Kokolli <hello@=heki.io'  
 }
 newTransport(){
   if(process.env.NODE_ENV=== 'production'){
-    console.log("email");
     return nodemailer.createTransport({
       service: 'Gmail',
       auth: {

@@ -73,28 +73,24 @@ block content
 
     if (user)
       if (!myReview)
-        div.container
-          
-            div.post
-              div.text Thanks for rating us!
-              div.edit EDIT
-            div.star-widget
-              input(type="radio",data-rate=5, name="rate", id="rate-5")
-              label(for="rate-5", class="fas fa-star")
-              input(type="radio", data-rate=4,name="rate", id="rate-4")
-              label(for="rate-4", class="fas fa-star")
-              input(type="radio", data-rate=3,name="rate", id="rate-3")
-              label(for="rate-3", class="fas fa-star")
-              input(type="radio", name="rate",data-rate=2, id="rate-2")
-              label(for="rate-2", class="fas fa-star")
-              input(type="radio", name="rate",data-rate=1, id="rate-1")
-              label(for="rate-1", class="fas fa-star")
-              form#POST-REVIEW()
-                header
-                  div.textarea
-                    textarea#review(cols="30", placeholder="Describe your experience..")
-                  div.btn
-                    button(type="submit",data-tour=tour._id, data-user=user._id) Post  
+        if(bookedTour)
+          div.container
+              div.star-widget
+                input(type="radio",data-rate=5, name="rate", id="rate-5")
+                label(for="rate-5", class="fas fa-star")
+                input(type="radio", data-rate=4,name="rate", id="rate-4")
+                label(for="rate-4", class="fas fa-star")
+                input(type="radio", data-rate=3,name="rate", id="rate-3")
+                label(for="rate-3", class="fas fa-star")
+                input(type="radio", name="rate",data-rate=2, id="rate-2")
+                label(for="rate-2", class="fas fa-star")
+                input(type="radio", name="rate",data-rate=1, id="rate-1")
+                label(for="rate-1", class="fas fa-star")
+                form#POST-REVIEW(method="POST")
+                    div.textarea
+                      textarea#review(cols="30", placeholder="Describe your experience..")
+                    div.btn
+                      button(type="submit",data-tour=tour._id, data-user=user._id) Post  
       -else 
         .reviews__cardS
           .reviews__avatar

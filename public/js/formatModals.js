@@ -24,7 +24,7 @@ export function openEditModal(){
 } else editModal.classList.add("hide");
  }
  export function openDeleteModal(){
-    console.log("TEST");
+   
     deleteModal.classList.remove('hide');
   }
    export function closeDeleteModal(e, clickedOutside){

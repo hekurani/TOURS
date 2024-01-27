@@ -29,6 +29,4 @@ tourRouter
     .patch(authControler.protect,authControler.restrictTo('admin','lead-guide','superadmin'),routers.CatchErrorTourPhoto,routers.resizeTourImages,routers.updatetour)
     .get(routers.gettour)
 
-    // tourRouter.route('/:tourId/reviews').post(authControler.protect,authControler.restrictTo('user'),reviewController.createReview)
-
     module.exports=tourRouter;

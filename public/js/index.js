@@ -152,7 +152,6 @@ if(deletebtnModal){
   }
   if(createTourForm){
     createTourForm.addEventListener('submit',e=>{
-      console.log("HEKURAN")
       e.preventDefault();
       const selectedGuides = Array.from(document.getElementById('guidesT').selectedOptions).map(option => option.value);
       const name=document.getElementById('nameT').value;
@@ -257,7 +256,6 @@ if(document.getElementById('editTour')){
   document.getElementById('editTour').addEventListener('click',e=>{
    
     e.preventDefault();
-    console.log("HYRII")
     var selectedGuides=[]
     if(document.getElementById('guidesTE').selectedOptions){ 
     selectedGuides = Array.from(document.getElementById('guidesTE').selectedOptions).map(option => option.value);
@@ -389,7 +387,6 @@ deleteReviewForm.addEventListener('submit',event=>{
 if(document.getElementById('deleteAcc')){
 document.getElementById('deleteAcc').addEventListener('click',event=>{
   event.preventDefault();
-console.log("HYRI")
 deleteYourself()
 })
 }
@@ -397,7 +394,6 @@ if(myEditReview){
   myEditReview.addEventListener('click',event=>{
     event.preventDefault();
     const placeholderValue = document.getElementById("myInput").value;
-    console.log("Placeholder Value: ", placeholderValue);
 
     // Get the value of the selected radio button
     let ratingValue;

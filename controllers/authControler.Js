@@ -79,7 +79,7 @@ const signResetToken = (id, time) => {
         expiresIn: expireTime
       });
     } else {
-        console.log("time",time)
+    
           return jwt.sign({ id }, process.env.REFRESH_TOKEN_SECRET, {
         expiresIn: time
       });
@@ -109,7 +109,7 @@ exports.signup = catchAsync( async (req,res,next)=>{
         passwordConfirm:req.body.passwordConfirm
     });
     req.user=newUser;
-    console.log("new User",req.body)
+
     const url=`${req.protocol}://${req.get('host')}/me`;
     await new Email(newUser,url).sendWelcome();
     next() 
@@ -128,7 +128,7 @@ return next(new AppError("please provide email and password",400));
 })
 exports.protect = catchAsync(async (req,res,next)=>{
 //1) getting token and check if its there
-console.log("refg",req.headers);
+
 let token; 
 if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
      token = req.headers.authorization.split(' ')[1];
@@ -147,7 +147,6 @@ if(!freshUser){
 
 //4) if User changed password after JWT was issued
 if(await freshUser.changedPasswordAfter(decoded.iat)){
-    console.log
     return next(new AppError('user recently changed password',401));
 }
 req.user = freshUser;
@@ -189,7 +188,6 @@ res.status(200).json({
 catch(err){
     user.passwordResetToken=undefined;
     user.passwordResetExpires=undefined;
-    console.log(err);
     await user.save({validateBeforeSave:false});
     return next(new AppError('There was an error while sending email'),500);
 }
@@ -200,7 +198,7 @@ const hashedToken = crypto
 .update(req.params.token)
 .digest('hex');
 const user = await User.findOne({passwordResetToken:hashedToken,passwordResetExpires:{$gt:Date.now()}
-});//,passwordResetExpires:{$gt:Date.now()},passwordResetExpires:{$gt:Date.now()}
+});
 if(!user){
     return next(new AppError('token is invalid or has expired',400));
 }
@@ -213,11 +211,6 @@ user.passwordConfirm = req.body.passwordConfirm;
 user.passwordResetToken=undefined;
 user.passwordResetExpires=undefined;
 createSendToken(user,200,res,10*60,req);
-// const token=signToken(user._id);
-//     res.status(200).json({
-//         status:'success',
-//         token:token
-//     })
 })
 exports.updatePassword =catchAsync( async (req,res,next)=>{
     // 1) get user from the collection
@@ -258,11 +251,9 @@ exports.isLoggedIn=catchAsync(async (req,res,next)=>{
 return next();
     }
     }
-    console.log("Arrived");
     next();
 })
 exports.refreshToken = async (req,res,next)=>{
-    console.log("req",req.headers);
 
     if(req.headers.refreshtoken){
      const refreshToken=req.headers.refreshtoken;

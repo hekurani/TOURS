@@ -119,7 +119,7 @@ tourSchema.virtual('reviews',{
     localField:'_id'
 })
 tourSchema.pre(/^find/, function(next) {
-    console.log('test');
+  
     this.populate({
       path: 'guides',
       select: '-__v'
@@ -131,13 +131,7 @@ tourSchema.pre(/^find/, function(next) {
 tourSchema.index({price:1,ratingsAverage:-1});
 tourSchema.index({slug:1});
 tourSchema.index({startLocation: '2dsphere'});
-// tourSchema.pre('save', async function(next){
-//   const guides=this.guides.map(async id=>await User.findById(id));
-//   this.guides=await Promise.all(guidePromises);
-//     next();
-// })
-//?hekuran-kokolli
-//Document middleware:runs before save command and .create() command
+
 tourSchema.pre('save', function(next) {
     this.slug = slugify(this.name, { lower: true });
     next();
@@ -157,8 +151,7 @@ tourSchema.pre(/^find/,function(next){
     next();
 })
 tourSchema.post(/^find/,function(docs,next){
-    console.log(`Query took ${Date.now()-this.start} milliseconds`);
-    console.log(docs);
+
     next();
 })
 const Tour=mongoose.model('Tour' , tourSchema);

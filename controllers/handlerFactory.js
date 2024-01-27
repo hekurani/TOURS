@@ -66,24 +66,18 @@ exports.createOne=Model=>catchAsync(async (req,res,next)=>{
         //         imageCover[1]=newdoc._id;
         //         newdoc.imageCover=imageCover.join('-');
 
-        
-    //  newdoc=await Model.findByIdAndUpdate(newdoc._id,{
-    //     images:newdoc.images,
-    //     imageCover
-    // },{
-    //     new:true,
-    //     runValidators:true
-    // })
+    if (Model==Tour) {     
     req.tourId=newdoc._id;
     return next();
-     
     }
+}
     res.status(201).json({
        status:'Success',
        data:{
            doc:newdoc
        }
-    })})   
+    })})
+       
     exports.getOne=(Model,popOptions)=>catchAsync( async (req,res,next)=>{
    let query=Model.findById(req.params.id);
    if(popOptions) query=query.populate(popOptions);

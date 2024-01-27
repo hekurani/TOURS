@@ -5,7 +5,7 @@ export async function forgotPassword(email){
         const res = await axios.post('http://127.0.0.1:3003/api/v1/user/forgotPassword', {
             email
           });
-          console.log(res);
+         
           if(res.data.status=='success'){
             showAlert("Success","An link to reset your password has been sent in your inbox!");
             window.location.reload();

@@ -28,7 +28,7 @@ export async function addTour(data){
 export async function editTour(data,tourId){
     try {
         const url =`http://127.0.0.1:3003/api/v1/tour/`+tourId ;
-           console.log("HYTI",data)
+          
             const headers = {
               Authorization: 'Bearer ' + getCookie('jwtToken')
             };

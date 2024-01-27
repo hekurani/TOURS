@@ -19,12 +19,11 @@ const xss=require('xss-clean');
 const hpp=require('hpp');
 const viewRouter=require('./Router/view-routes');
 const reviewRouter=require('./Router/review-routes');
-// const limiter = rateLimit({
-//     max:100,
-//     windowsMs:60*60*1000,
-//     message:'Too many requests from this IP, please try again in one hour'
-// })
-// app.use('/api');
+const limiter = rateLimit({
+    max:100,
+    windowsMs:60*60*1000,
+    message:'Too many requests from this IP, please try again in one hour'
+})
 app.use(corse({
   origin: 'http://localhost:3003',
   credentials: true,
@@ -54,23 +53,14 @@ app.use(express.json({limit: '10kb' }));//middleware is an function between requ
 app.use(mongoSanitize());
 //data Sanitization against XSS
 app.use(xss());
-// app.use( helmet({ contentSecurityPolicy: false }) );
-app.use((req,res,next)=>{
-    console.log("Hello from");
-    next();
-});
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use((req,res,next)=>{
     req.requestTime=new Date().toISOString();
     next();
 })
-//Route Handlers
 
-// app.get('/api/v1/tour',getTours);
-// // app.get('/api/v1/tour/:id',gettour);
-// // app.post('/api/v1/tour',createtour);
-// app.patch('/api/v1/tour/:id',updatetour);
-// app.delete("/api/v1/tour/:id",deletetour)
 
 //ROUTES
 app.use('/', viewRouter);
@@ -81,11 +71,6 @@ app.use('/api/v1/booking',bookingRouter);
 
 
 app.all('*',(req,res,next)=>{
-//  
-
-// const err = new Error(`Cant find the ${req.originalUrl} on the server`);
-// err.status='fail';
-// err.statuscode=404;
 next(new AppError(`Cant find the ${req.originalUrl} on the server`,404));
 }) 
  app.use(globalErrorHandler);    
