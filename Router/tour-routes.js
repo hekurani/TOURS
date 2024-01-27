@@ -9,7 +9,7 @@ const { router } = require('../Main.Js');
 tourRouter.use('/:tourId/reviews',reviewRouter)
 tourRouter
     .route('/monthly-plan/:year')
-    .get(authControler.protect,authControler.restrictTo('lead-guide','admin','guide'),routers.getMonthlyPlan)
+    .get(authControler.protect,authControler.restrictTo('lead-guide','admin','guide','superadmin'),routers.getMonthlyPlan)
 tourRouter
      .route('/tour-stats')
      .get(routers.getTourStats)
@@ -21,12 +21,12 @@ tourRouter.route('/distance/:latlng/unit/:unit').get(routers.getDistances)
 tourRouter
     .route('/')
     .get(routers.getTours)
-    .post(authControler.protect,authControler.restrictTo('admin','lead-guide'),routers.CatchErrorTourPhoto,routers.createtour,routers.resizeTourImages)
+    .post(authControler.protect,authControler.restrictTo('admin','lead-guide','superadmin'),routers.CatchErrorTourPhoto,routers.createtour,routers.resizeTourImages)
     // .post(routers.checkBody,routers.createtour)
 tourRouter
     .route('/:id')
-    .delete(authControler.protect,authControler.restrictTo('admin','lead-guide'),routers.deletetour)
-    .patch(authControler.protect,authControler.restrictTo('admin','lead-guide'),routers.CatchErrorTourPhoto,routers.resizeTourImages,routers.updatetour)
+    .delete(authControler.protect,authControler.restrictTo('admin','lead-guide','superadmin'),routers.deletetour)
+    .patch(authControler.protect,authControler.restrictTo('admin','lead-guide','superadmin'),routers.CatchErrorTourPhoto,routers.resizeTourImages,routers.updatetour)
     .get(routers.gettour)
 
     // tourRouter.route('/:tourId/reviews').post(authControler.protect,authControler.restrictTo('user'),reviewController.createReview)

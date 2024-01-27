@@ -112,16 +112,7 @@ exports.signup = catchAsync( async (req,res,next)=>{
     console.log("new User",req.body)
     const url=`${req.protocol}://${req.get('host')}/me`;
     await new Email(newUser,url).sendWelcome();
-    next()
-    // createSendToken(newUser,201,res,-1,req);
-//     const token = signToken(newUser._id);
-//     res.status(201).json({
-// status:'success',
-// token:token,
-// data:{
-//     user:newUser
-//   }
-// }) 
+    next() 
 })
 exports.login=catchAsync(async (req,res,next)=>{
     const {email,password} = req.body;
@@ -133,13 +124,7 @@ return next(new AppError("please provide email and password",400));
     if(!user || !(await user.correctPassword(password, user.password))){
         return next(new AppError('Incorrect email or password',401));
     }
-    createSendToken(user,201,res,-1,req);
-    
-    // const token=signToken(user._id);
-    // res.status(200).json({
-    //     status:'success',
-    //     token:token
-    // })
+    createSendToken(user,201,res,-1,req);s
 })
 exports.protect = catchAsync(async (req,res,next)=>{
 //1) getting token and check if its there
@@ -254,7 +239,6 @@ exports.isLoggedIn=catchAsync(async (req,res,next)=>{
     if(req.cookies.jwtToken){
         token=req.cookies.jwtToken
    }
-   
     if(token){
         try{
             const decoded = await promisify(jwt.verify)(token,process.env.JWT_SECRET);
@@ -315,10 +299,6 @@ exports.refreshToken = async (req,res,next)=>{
     else{
         return next(new AppError('you have not loged In?! Please Log In'));
     }
-//    return res.status(404).json({
-//     status:"failed",
-//     message:"not found"
-//    })
 }
 exports.logout = (req, res) => {
     req.headers.refreshToken=null;

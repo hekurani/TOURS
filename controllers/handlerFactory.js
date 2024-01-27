@@ -32,7 +32,11 @@ exports.deletetour=Model=>catchAsync(async (req,res,next)=>{
         });
 exports.updateOne=Model=>catchAsync(async (req,res,next)=>{
 if(req.body.password)next(new AppError('You are not allowed to update password',403))
-
+ if(Model==User){
+    if((req.user.role==="admin"&&doc.role==="superadmin") || (req.user.role==="admin" && doc.role==="admin")){
+        return next(new AppError("You are not allowed to perform this action ",403))
+    }
+ }
     const doc= await Model.findByIdAndUpdate(req.params.id,req.body,{
         new:true,
         runValidators:true
@@ -50,7 +54,6 @@ if(req.body.password)next(new AppError('You are not allowed to update password',
 })
 exports.createOne=Model=>catchAsync(async (req,res,next)=>{ 
     req.body.imageCover='default.jpg';
-    console.log("req",req.body);
     const newdoc = await Model.create(req.body)
     // console.log(Model==Tour,Model,Tour);
     if (Model==Tour) {

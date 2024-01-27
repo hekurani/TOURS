@@ -21,7 +21,8 @@ export async function addTour(data){
           },3000)
         }
       } catch (err) {
-        showAlert('error', err.response.data.message);
+        console.log(err);
+        showAlert('error', err.response.data.message.message);
       }
 }
 export async function editTour(data,tourId){
@@ -44,7 +45,8 @@ export async function editTour(data,tourId){
           },3000)
         }
       } catch (err) {
-        showAlert('error', err.response.data.message);
+        console.log(err);
+        showAlert('error', err.response.data.message.message);
       }
 }
 export async function deleteTour(tourId){

@@ -4,16 +4,6 @@ const catchAsync = require('./../utils/catchAsync.Js')
 const AppError=require('./../utils/appError.Js');
 const factory=require('./handlerFactory');
 const multer=require('multer');
-// const multerStorage = multer.diskStorage({
-//     destination: (req,file,cb)=>{
-//         cb(null,'./Project2/public/img/users/')
-//     },
-//     filename:(req,file,cb)=>{
-//         // format of name of image is user-userId-user.jpeg
-//         const ext=file.mimetype.split('/')[1];
-//         cb(null,`user-${req.user.id}-${Date.now()}.${ext}`)
-//     }
-// })
 const multerStorage=multer.memoryStorage();//saving in a disk this image and saved as buffer
 const multerFilter = (req,file,cb)=>{
     if(file.mimetype.startsWith('image')){
